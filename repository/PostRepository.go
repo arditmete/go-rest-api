@@ -71,8 +71,7 @@ func (r *PostRepository) CreatePost(w http.ResponseWriter, rr *http.Request) err
 	title := keyVal["title"]
 	err = r.DB.QueryRow("SELECT title FROM posts WHERE title = ?", title).Scan(&title)
 	if err == nil {
-		http.Error(w, "Title already exists", http.StatusConflict)
-		return err
+		return fmt.Errorf("Post already exists!")
 	} else if err != sql.ErrNoRows {
 		panic(err.Error())
 	}
