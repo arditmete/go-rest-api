@@ -38,6 +38,7 @@ func (h *UserHandler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *UserHandler) CreateUserHandler(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
 	err := h.Service.CreateUser(w, r)
 	if err != nil {
 		http.Error(w, fmt.Sprintf("Error creating user with error: %s", err), http.StatusInternalServerError)
@@ -63,7 +64,7 @@ func (h *UserHandler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) 
 	params := mux.Vars(r)
 	err := h.Service.DeleteUser(w, r)
 	if err != nil {
-		http.Error(w, fmt.Sprintf("Error deleting user witht Id: %s with error: %s", params["id"], err), http.StatusInternalServerError)
+		http.Error(w, fmt.Sprintf("Error deleting user with Id: %s with error: %s", params["id"], err), http.StatusInternalServerError)
 		return
 	}
 	json.NewEncoder(w).Encode("User is deleted successfully!")

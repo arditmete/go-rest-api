@@ -41,9 +41,9 @@ func main() {
 	userRepository := repository.NewUserRepository(db)
 	postService := service.NewPostService(postRepository)
 	userService := service.NewUserService(userRepository)
+	authService := service.NewAuthService(userService)
 	postHandler := handler.NewPostHandler(postService)
-	authHandler := &handler.AuthHandler{}
-	loginHandler := handler.NewLoginHandler(userService, authHandler)
+	authHandler := handler.NewAuthHandler(authService)
 	userHandler := handler.NewUserHandler(userService)
 
 	// Initialize handlers with the service and repository dependencies
@@ -52,7 +52,7 @@ func main() {
 	getPostHandler := postHandler.GetPostHandler
 	updatePostHandler := postHandler.UpdatePostHandler
 	deletePostHandler := postHandler.DeletePostHandler
-	loginUserHandler := loginHandler.LoginUserHandler
+	loginUserHandler := authHandler.LoginUserHandler
 	getUsersHandler := userHandler.GetUsersHandler
 	createUserHandler := userHandler.CreateUserHandler
 	getUserHandler := userHandler.GetUserHandler

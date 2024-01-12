@@ -16,8 +16,6 @@ type UserRepository struct {
 	DB *sql.DB
 }
 
-var secretKey = []byte("ardit")
-
 func NewUserRepository(db *sql.DB) *UserRepository {
 	return &UserRepository{DB: db}
 }
